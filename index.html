@@ -9,18 +9,25 @@
 
 <body>
     <style>
-        input.hidden {display:none;}
+        input.hidden {
+            display: none;
+        }
     </style>
-    <form id="myForm" action="http://47.111.226.143:8080/api/yellow_page/audit" method="get" name="表单名称" target="myForm">
-        号码：<input type="text" name="Phone" id="Phone">
-        拒绝原因：<input type="text" id="reason" name="reason">
-        <input type="submit" value="提交">
-        <button onClick="document.location.reload()">刷新</button>
-        <br>
-        <input class="hidden" type="text" id="status" name="status" value="1" >
-    </form>
-    <div>结果：</div>
-    <iframe width="520px" id="myForm" name="myForm"></iframe>
+    <div style="float: left; width: 30%;">
+        <form id="myForm" action="http://47.111.226.143:8080/api/yellow_page/audit" method="get" name="表单名称"
+            target="myForm">
+            号码：<input type="text" name="Phone" id="Phone">
+            拒绝原因：<input type="text" id="reason" name="reason">
+            <input type="submit" value="提交">
+            <button onClick="document.location.reload()">刷新</button>
+            <br>
+            <input class="hidden" type="text" id="status" name="status" value="1">
+        </form>
+    </div>
+    <div style="float: right; width: 70%;">
+        <iframe width="520px" height="45px" id="myForm" name="myForm"></iframe>
+    </div>
+
 
 
 </body>
