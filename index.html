@@ -24,6 +24,8 @@
             <input class="hidden" type="text" id="status" name="status" value="2">
         </form>
         cookie：<input type="text" name="Cookie" id="Cookie"><button onClick="updateCookie()">更新</button>
+        <br><br>
+        <button onClick="queryExpireCount()">查询当前过期号码数量</button> <button onClick="oneKeyExpireAll()">一键下线过期号码</button>
     </div>
     <div style="float: left; ">
         <iframe width="350px" height="45px" id="myForm" name="myForm"></iframe>
@@ -55,6 +57,43 @@
               }
         }
 
+        function queryExpireCount() {
+            var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://127.0.0.1:8080/api/yellow_page/queryExpireCount")
+              xhr.send()
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState === 4 && xhr.status === 200) {
+                      //打印JSON字符串形式的服务器响应数据；
+                      var json_resp = eval("(" + xhr.responseText + ")");
+                      if (json_resp['retCode'] == 200) {
+                          window.alert("过期号码数量=" + json_resp['data']);
+                          return
+                      } else {
+                        window.alert("查询异常：" + json_resp['retMsg']);
+                          return
+                      }
+                  }
+              }
+        }
+
+        function oneKeyExpireAll() {
+            var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://127.0.0.1:8080/api/yellow_page/oneKeyExpireAll")
+              xhr.send()
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState === 4 && xhr.status === 200) {
+                      //打印JSON字符串形式的服务器响应数据；
+                      var json_resp = eval("(" + xhr.responseText + ")");
+                      if (json_resp['retCode'] == 200) {
+                          window.alert("下线成功" + json_resp['data']['success'] + ";无小米sid" + json_resp['data']['fail1'] + ";下线失败" + json_resp['data']['fail2']);
+                          return
+                      } else {
+                        window.alert("下线异常：" + json_resp['retMsg']);
+                          return
+                      }
+                  }
+              }
+        }
       
     </script>
 </body>
