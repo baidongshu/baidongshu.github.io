@@ -25,7 +25,7 @@
         </form>
         cookie：<input type="text" name="Cookie" id="Cookie"><button onClick="updateCookie()">更新</button>
         <br><br>
-        <button onClick="queryExpireCount()">查询当前过期号码数量</button> <button onClick="oneKeyAudit()">一键审批所有</button>
+        <button onClick="queryExpireCount()">查询当前过期号码数量</button> <button onClick="oneKeyAudit()">一键审批所有</button> <button onClick="oneKeyExpireAll()">一键下线过期</button>
     </div>
     <div style="float: left; ">
         <iframe width="350px" height="45px" id="myForm" name="myForm"></iframe>
@@ -95,6 +95,24 @@
               }
         }
       
+       function oneKeyExpireAll() {
+            var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://127.0.0.1:8080/api/yellow_page/oneKeyExpireAll")
+              xhr.send()
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState === 4 && xhr.status === 200) {
+                      //打印JSON字符串形式的服务器响应数据；
+                      var json_resp = eval("(" + xhr.responseText + ")");
+                      if (json_resp['retCode'] == 200) {
+                          window.alert("批量下线完成");
+                          return
+                      } else {
+                        window.alert("批量下线审批异常" + json_resp['retMsg']);
+                          return
+                      }
+                  }
+              }
+        }
     </script>
 </body>
 
