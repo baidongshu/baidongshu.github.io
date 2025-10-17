@@ -25,6 +25,10 @@
         </form>
         cookie：<input type="text" name="Cookie" id="Cookie"><button onClick="updateCookie()">更新</button>
         <br><br>
+
+        号码（逗号分隔）：<input type="text" name="xiaomiBatchNo" id="xiaomiBatchNo"> 名称：<input type="text" name="xiaomiBatchName" id="xiaomiBatchName"><button onClick="addXiaomiBatch()">批量上线</button>
+        <br><br>
+
         <button onClick="queryExpireCount()">查询当前过期号码数量</button> <button onClick="oneKeyAudit()">一键审批所有</button> <button onClick="oneKeyExpireAll()">一键下线过期</button>
     </div>
     <div style="float: left; ">
@@ -51,6 +55,40 @@
                           return
                       } else {
                         window.alert("更新失败：" + json_resp['retMsg']);
+                          return
+                      }
+                  }
+              }
+        }
+
+        function addXiaomiBatch() {
+            var noStr=document.getElementById("xiaomiBatchNo").value;
+            if (!noStr) {
+                window.alert("未填写Number");
+                return
+            }
+            var nameStr=document.getElementById("xiaomiBatchNo").value;
+            if (!nameStr) {
+                window.alert("未填写Number");
+                return
+            }
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "http://127.0.0.1:8080/api/yellow_page/addXiaomiBatch", true)
+              const data = "phoneListStr=" + noStr +  "&Name=" + nameStr;
+              const formData = new FormData();
+              formData.append('phoneListStr', noStr);
+              formData.append('Name', nameStr);
+              xhr.send(formData)
+
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState === 4 && xhr.status === 200) {
+                      //打印JSON字符串形式的服务器响应数据；
+                      var json_resp = eval("(" + xhr.responseText + ")");
+                      if (json_resp['retCode'] == 200) {
+                          window.alert("添加成功" + json_resp['data']);
+                          return
+                      } else {
+                        window.alert("添加失败：" + json_resp['retMsg']);
                           return
                       }
                   }
